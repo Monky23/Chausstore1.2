@@ -90,7 +90,7 @@
             </thead>
             <tbody>
             <?php
-                $prod = 'SELECT d.name, b.name, p.name, c.name, p.gender, p.price
+                $prod = 'SELECT p.id, d.name, b.name, p.name, c.name, p.gender, p.price
                 from product as p ,
                 brand as b,
                 color as c,
@@ -102,28 +102,31 @@
                 AND
                 p.category_id = d.id ORDER BY p.id DESC;';
                 $screenProduct = mysqli_query($conn, $prod);
-
-                while ($row = mysqli_fetch_row($screenProduct)) {?>
+                while ($row = mysqli_fetch_row($screenProduct)) {
+                    $prodId= $row[0];?>
                     <tr>
                     <?php
-                    for($i = 0; $i < count($row); ++$i){
-                        $prodId = $row[0];
+                    for($i = 1; $i < count($row); ++$i){
                         echo("<td>".$row[$i]."</td>");
                     }?>
                     <td>
-                    <form method="post" action=""><input type='submit' name='modif<?php echo $prodId ?>' value='modifier'>
-                    </form></td>
-                    <td>
-                    <form method="post" action="">
-                    <input type='submit' name='del_off<?php echo $prodId ?>' value='supprimer'>
-                    </form>
+                        <form method="post" action="">
+                            <input type='text' name='new_name' placeholder='renommer'>
+                            <input type='submit' name='modif<?php echo $prodId ?>' value='modifier'>
+                        </form>
                     </td>
-                   <?php echo "</tr>";
+                    <td>
+                        <form method="post" action="">
+                            <input type='submit' name='del_off<?php echo $prodId ?>' value='supprimer'>
+                        </form>
+                    </td>
+                   </tr>
+                   <?php
+                    if(isset($_POST["del_off".$prodId])){
+                        header("location: del_product.php?id=".$prodId);
+                    }
                 }
 
-                if(isset($_POST["del_off".$prodId])){
-                    header("location: del_product.php?id=".$prodId);
-                };
             ?>
             </tbody>
         </table>

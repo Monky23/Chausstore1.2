@@ -1,0 +1,38 @@
+body{
+    margin: 0;
+    background-color: cadetblue;
+    color: #333350;
+}
+h1, h2, nav, input{
+    text-align: center;
+}
+h2, h1{
+    color: #dce3ee;
+}
+p{
+    width: 60vw;
+    margin: auto;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+a{
+ background-color: #333350;
+ color: #f8f8ff;
+ font-size: 23px;
+ text-decoration-line: none;
+ margin: 5px;
+ padding: 5px;
+ border-radius: 15%;
+} 
+a:hover{
+ background-color: #4646dd;
+}
+div{
+    border: #333350 1px solid;
+    width: 60vw;
+    margin: auto;
+    padding: 10px;
+}
+input{
+    margin-bottom: 5px;
+}

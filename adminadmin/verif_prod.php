@@ -33,7 +33,7 @@
         $inn = "INSERT INTO product (name, category_id, brand_id, color_id, gender, price) VALUES ('$product', '$id_category', '$id_brand', '$id_color', '$gender', '$price')";
         $result = mysqli_query($conn,$inn);
         if($result === false){
-            echo "ne marche pas mais pourquoi bordel de merde!!!!!";
+            echo "ne marche pas!!!!!";
         }
     }
 ?>
