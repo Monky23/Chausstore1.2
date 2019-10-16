@@ -1,5 +1,6 @@
 <?php require_once 'bdd.php';?>
 <?php require_once 'verif_prod.php';?>
+<?php require_once 'add_product.php';?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -15,7 +16,7 @@
         <a href="index.php">Acceuil</a>
         <a href="product.php">Produits</a>
         <a href="category.php">Catégories</a>
-        <a href="prod.php">Marques</a>
+        <a href="brand.php">Marques</a>
         <a href="color.php">Couleurs</a>
         <a href="size.php">Pointures</a>
         <a href="stock.php">Stocks</a>
@@ -92,17 +93,19 @@
             $prodId= $row[0];?>
             <div id='product'><p><?php echo $row[1]." ".$row[2]." ".$row[3]." ".$row[4]." ".$row[5]." ".$row[6];?></p>
                 <form method='post'>
-                    <input type='submit' name='modif<?php echo $prodId; ?>' value='modifier'>
-                    <input type='submit' name='del_off<?php echo $prodId; ?>' value='supprimer'>
+                    <!--<input type='submit' name='modif<?php echo $prodId; ?>' value='modifier'>
+                    <input type='submit' name='del_off<?php echo $prodId; ?>' value='supprimer'>-->
+                    <a href="del_product.php?id=<?php echo $prodId; ?>"> Supprimer </a>
+                    <a href="update_product.php?id=<?php echo $prodId; ?>"> Modifier </a>
                 </form>
             </div>
             <?php
-                if(isset($_POST["del_off".$prodId])){
-                    header("location: del_product.php?id=".$prodId);
-                };
-                if(isset($_POST["modif".$prodId])){
-                    header("location: update_product.php?id=".$prodId);
-                };
+                //if(isset($_POST["del_off".$prodId])){
+                //    header("location: del_product.php?id=".$prodId); 
+                // };
+                //if(isset($_POST["modif".$prodId])){
+                //    header("location: update_product.php?id=".$prodId);
+                //};
             }
     ?>
     </div>

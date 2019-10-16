@@ -39,11 +39,11 @@
             <?php
                 $categories = 'select * from category ORDER BY id DESC;';
                 $screenCategory = mysqli_query($conn, $categories);
-                while ($row_category = mysqli_fetch_array($screenCategory)) {
+                while ($row_categories = mysqli_fetch_array($screenCategory)) {
                     if($row[1] == $row_categories[1]){
-                        echo "<option selected='selected'>".$row_category[1]."</option>";  
+                        echo "<option selected='selected'>".$row_categories[1]."</option>";  
                     }else{
-                        echo "<option>".$row_category[1]."</option>";
+                        echo "<option>".$row_categories[1]."</option>";
                     }
                 }
             ?>
@@ -88,43 +88,50 @@
             ?>"><br>
             <input type="submit" name="update_Product" id="update_Product">
             <?php
-                if (!empty($_POST['updateProduct'])){
-                    $error = "";
-                    if(empty($_POST['product_name'])){
-                        $error .= 'veuillez saisir le nom d\'un produit<br/>';
-                    };
-                    if(empty($_POST['price_name'])){
-                        $error .= 'veuillez saisir un prix<br/>';
-                    }
-                };
-                if((!empty($_POST['updateProduct'])) && (empty($error))){
+                //if(empty($_POST['product_name']) OR empty($_POST['price_name'])){
+                //$error ="";
+                //    if(empty($_POST['product_name'])){
+                //        $error .= 'veuillez saisir le nom d\'un produit<br/>';
+                //    };
+                //    if(empty($_POST['price_name'])){
+                //        $error .= 'veuillez saisir un prix<br/>';
+                //    }
+                //}
+                
+                if(isset($_POST['update_Product'])){
+                    if(!empty($_POST['product_name']) AND !empty($_POST['price_name'])){
                     $product = htmlspecialchars($_POST['product_name']);
+
                     $category = htmlspecialchars($_POST['category_name']);
                     $req_category = "SELECT * FROM category WHERE name = '$category'";
                     $res_category = mysqli_query($conn, $req_category);
                     $row_category = mysqli_fetch_array($res_category);
                     $id_category = intval($row_category[0]);
+
                     $brand = htmlspecialchars($_POST['brand_name']);
                     $req_brand = "SELECT * FROM brand WHERE name = '$brand'";
                     $res_brand = mysqli_query($conn, $req_brand);
                     $row_brand = mysqli_fetch_array($res_brand);
                     $id_brand = intval($row_brand[0]);
+
                     $color = htmlspecialchars($_POST['color_name']);
                     $req_color = "SELECT * FROM color WHERE name = '$color'";
                     $res_color = mysqli_query($conn, $req_color);
                     $row_color = mysqli_fetch_array($res_color);
                     $id_color = intval($row_color[0]);
+
                     $gender = htmlspecialchars($_POST['gender_name']);
                     $price = floatval($_POST['price_name']);
-                    if(isset($_POST["updateProduct".$brandId]) AND !empty($_POST['product_name']) AND !empty($_POST['price_name'])){
-                        $idproduct= intval($_GET["id"]);
-                        $productmodif = "UPDATE product
-                        SET name = '$product', category_id = '$id_category' , brand_id = '$id_brand', color_id = $id_color, gender = $gender, price = $price
-                        WHERE product.id = '$idproduct'
-                        mysqli_query($conn, $productmodif)";
-                        header("location: product.php");
+
+                    $idproduct= intval($_GET["id"]);
+
+                    $productmodif = "UPDATE product
+                    SET name = '$product', category_id = '$id_category' , brand_id = '$id_brand', color_id = '$id_color', gender = '$gender', price = '$price'
+                    WHERE id = '$idproduct'";
+                    mysqli_query($conn, $productmodif);
+                    header("location: product.php");
                     };
-                    if($productmodif === false){
+                    if($productmodif == false){
                         echo "ne marche pas!!!!!";
                     }
                 }
