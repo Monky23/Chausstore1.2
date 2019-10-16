@@ -11,7 +11,6 @@
         }
     }
     if((!empty($_POST['addProduct'])) && (empty($error))){
-        //$message = "Votre candidature a bien été prise en compte";
         $product = htmlspecialchars($_POST['product_name']);
         $category = htmlspecialchars($_POST['category_name']);
         $req_category = "SELECT * FROM category WHERE name = '$category'";

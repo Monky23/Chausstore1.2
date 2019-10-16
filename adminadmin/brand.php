@@ -41,7 +41,7 @@
     <h2>Listing des marques de chaussures avec option de modification et suppression</h2>
     <div>
         <?php
-            $brands = 'select * from brand ORDER BY id DESC;';
+            $brands = 'SELECT * FROM brand ORDER BY id DESC;';
             $screenBrand = mysqli_query($conn, $brands);
 
             while ($row = mysqli_fetch_row($screenBrand)) {

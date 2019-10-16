@@ -22,8 +22,11 @@
         };
         if(isset($_POST["del_product_confirm"])){
             $idproduct= intval($_GET["id"]);
+            $delstock_product = "DELETE stock FROM stock
+            WHERE product_id='$idproduct'";
             $delproduct="DELETE FROM product
             WHERE id='$idproduct'";
+            mysqli_query($conn,$delstock_product);
             mysqli_query($conn,$delproduct);
             header("location: product.php");
         }
