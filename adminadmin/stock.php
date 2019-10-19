@@ -1,4 +1,6 @@
 <?php require_once 'bdd.php';?>
+<?php require_once 'verif_prod.php';?>
+<?php require_once 'add_stock.php';?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -21,11 +23,15 @@
     </nav>
     <h2>Ajouter du stock</h2>
     <div>
-    <form method="post" action="add_stock.php" id="add_stock">
+    <p><?php if(isset($error)){echo $error;} ?></p>
+    <form method="post" action="" id="add_stock">
 				<label for="name">Quantité</label><br>
-				<input type="text" name="stock"><br>
+				<input type="text" name="stock_quantity" value="<?php
+            if(!empty($_POST['stock_quantity'])){
+                echo $_POST['stock_quantity'];
+            }?>"><br>
 				<label for="product">Nom du produit</label><br>
-				<select name="product_stock" id="product_stock"><
+				<select name="product_name" id="product_name">
 					<?php
                     $products = 'select * from product ORDER BY id DESC;';
                     $screenProduct = mysqli_query($conn, $products);
@@ -37,7 +43,7 @@
 			</p>
 			<p>
 				<label for="size">Taille</label><br>
-				<select name="size_stock" id="size_stock"><
+				<select name="size_name" id="size_name">
 					<?php
                     $sizes = 'select * from size ORDER BY id DESC;';
                     $screenSize = mysqli_query($conn, $sizes);
@@ -51,36 +57,28 @@
         </div>
     <h2>listing des stocks</h2>
     <div>
-        <table class="table_stock">
-            <thead>
-                <tr>
-                    <td>Stock</td>
-                    <td>Produit</td>
-                    <td>Taille</td>
-                </tr>     
-            </thead>
-            <tbody>
-            <?php
-                $stock = 'SELECT stock.stock, product.name, size.name
-                from stock,
-                product,
-                size
-                WHERE
-                stock.product_id = product.id
-                AND
-                stock.size_id = size.id;';
-                $screenStock = mysqli_query($conn, $stock);
-
-                while ($row = mysqli_fetch_row($screenStock)) {
-                    echo "<tr>";                    
-                    for($i = 0; $i < count($row); ++$i){
-                        echo("<td>".$row[$i]."</td>");
-                    }
-                    echo("</tr>");
+    <?php
+            $stock = 'SELECT stock.stock, product.name, size.name, product.id, size.id
+            from stock,
+            product,
+            size
+            WHERE
+            stock.product_id = product.id
+            AND
+            stock.size_id = size.id ORDER BY product.id DESC;';
+            $screenStock = mysqli_query($conn, $stock);
+            while ($row = mysqli_fetch_row($screenStock)) {
+                $id_product = $row[3];
+                $id_size = $row[4];?>
+                <div id='stock'><p><?php echo $row[0]." ".$row[1]." ".$row[2];?></p>
+                    <form method='post'>
+                        <a href="del_stock.php?idproduct=<?php echo $id_product ?>&idsize=<?php echo $id_size; ?>">Supprimer</a>
+                        <a href="update_stock.php?idproduct=<?php echo $id_product ?>&idsize=<?php echo $id_size; ?>"> Modifier </a>
+                    </form>
+                </div>
+                <?php
                 }
-            ?>
-            </tbody>
-        </table>>
+    ?>
     </div>
 </body>
 </html>

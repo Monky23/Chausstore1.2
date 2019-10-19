@@ -10,4 +10,11 @@
             $error .= 'veuillez saisir un prix<br/>';
         }
     }
-?>//
+    if (!empty($_POST['add_stock'])){
+        $error = "";
+
+        if(empty($_POST['stock_quantity'])){
+            $error .= 'veuillez saisir une quantité';
+        }
+    }
+?>

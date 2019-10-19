@@ -88,16 +88,6 @@
             ?>"><br>
             <input type="submit" name="update_Product" id="update_Product">
             <?php
-                //if(empty($_POST['product_name']) OR empty($_POST['price_name'])){
-                //$error ="";
-                //    if(empty($_POST['product_name'])){
-                //        $error .= 'veuillez saisir le nom d\'un produit<br/>';
-                //    };
-                //    if(empty($_POST['price_name'])){
-                //        $error .= 'veuillez saisir un prix<br/>';
-                //    }
-                //}
-                
                 if(isset($_POST['update_Product'])){
                     if(!empty($_POST['product_name']) AND !empty($_POST['price_name'])){
                     $product = htmlspecialchars($_POST['product_name']);
@@ -138,3 +128,5 @@
             ?>
         </form>
     </div>
+</body>
+</html>    
